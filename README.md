@@ -3,7 +3,7 @@ tmpl
 
 tmpl(short for template) is a simple tool made in Go which combines a template file and data in a single file.
 
-tmpl tries to be simple, no recursive path support, neither the possibility tio use multiple files at once,
+tmpl tries to be simple, no recursive path support, neither the possibility to use multiple files at once,
 this because tmpl is mainly aimed to scripts and tools like Make
 
 Syntax
@@ -16,7 +16,7 @@ This is it.
 File type
 =========
 
-tmpl doesn't care abount file type, you can use it for whatever you want, from generating html pages to simple text.
+tmpl doesn't care about file type, you can use it for whatever you want, from generating HTML pages to simple text.
 
 The template file may be provided with Go text/template syntax, data is a little more complicated, plugin can be loaded at runtime or can be embedded inside the executable, the extension of the data file is used to determine the format.
 

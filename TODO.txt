@@ -1,5 +1,5 @@
 Viable product
-Multiple format for data
+Multiple formats for data
  - Compile Time
  - Run Time
 Sanitaze HTML
