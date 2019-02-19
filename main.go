@@ -24,23 +24,19 @@ func main() {
 
 	flag.Parse()
 
-	fmt.Println(templateFile)
-	fmt.Println(dataFile)
-	fmt.Println(outputFile)
-
 	if !templateFile.IsValid() || !dataFile.IsValid() || strings.TrimSpace(outputFile) == "" {
-		fmt.Fprintf(os.Stderr, "Usage: tmpl -template=template.tmpl -data=data.json -output=output.html\n")
 		if !templateFile.IsValid() {
-			fmt.Fprintln(os.Stderr, "template is not valid", templateFile)
+			fmt.Fprintln(os.Stderr, "template does not exist", templateFile)
 		}
 		if !dataFile.IsValid() {
-			fmt.Fprintln(os.Stderr, "data is not valid", dataFile)
+			fmt.Fprintln(os.Stderr, "data does not exist", dataFile)
 		}
 		if strings.TrimSpace(outputFile) == "" {
-			fmt.Fprintln(os.Stderr, "output is not valid", outputFile)
+			fmt.Fprintln(os.Stderr, "output is not set", outputFile)
 		}
 
-		fmt.Fprintln(os.Stderr, "Usage:")
+		fmt.Fprintf(os.Stderr, "\nUsage: tmpl -template=template.tmpl -data=data.json -output=output.html\n")
+		fmt.Fprintln(os.Stderr, "Options:")
 		flag.PrintDefaults()
 		os.Exit(1)
 	}

@@ -24,7 +24,6 @@ func (f *FileFlag) Set(value string) error {
 	}
 
 	*f = FileFlag(value)
-	fmt.Printf("FileFlag.Set(%s) = %v\n", value, f)
 	_, err := os.Stat(value)
 	if err != nil { //This include if the file doesn't exist
 		return err
