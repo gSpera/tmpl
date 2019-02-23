@@ -12,7 +12,7 @@ import (
 	"html/template"
 )
 
-const outputPermission = 0666
+const defaultOutputPermission = 0666
 
 func main() {
 	templateFile := new(FileFlag)
@@ -21,6 +21,7 @@ func main() {
 	flag.Var(templateFile, "template", "Template file")
 	flag.Var(dataFile, "data", "Data file")
 	flag.StringVar(&outputFile, "output", "", "Output file")
+	outputPermission := flag.Int("permission", defaultOutputPermission, "permission used to create output file")
 
 	flag.Parse()
 
@@ -51,7 +52,7 @@ func main() {
 		log.Fatalf("Cannot unmarshal data: %v\n", err)
 	}
 
-	output, err := os.OpenFile(outputFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, outputPermission)
+	output, err := os.OpenFile(outputFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.FileMode(*outputPermission))
 	if err != nil {
 		log.Fatalf("Cannot open output file: %v\n", err)
 	}
