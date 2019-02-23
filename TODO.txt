@@ -1,6 +1,4 @@
-Viable product
 Multiple formats for data
  - Compile Time
  - Run Time
-Sanitaze HTML
 Library
