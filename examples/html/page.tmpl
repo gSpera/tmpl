@@ -1,0 +1,10 @@
+<h1>{{.Title}}</h1>
+<b>{{.Author}}</b>
+<h2>Sanitized</h2>
+<p>
+    {{.Content | safeHTML}}
+</p>
+<h2>Not Sanitized</h2>
+<p>
+    {{.Content}}
+</p>
