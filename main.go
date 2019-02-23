@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"text/template"
+	"html/template"
 )
 
 const outputPermission = 0666
@@ -56,7 +56,13 @@ func main() {
 		log.Fatalf("Cannot open output file: %v\n", err)
 	}
 
-	t, err := template.ParseFiles(templateFile.String())
+	t := template.New("tmpl")
+	t.Funcs(safeTemplateFunctions)
+	tmplBody, err := ioutil.ReadFile(templateFile.String())
+	if err != nil {
+		log.Fatalf("Cannot read template file: %v\n", err)
+	}
+	t, err = t.Parse(string(tmplBody))
 	if err != nil {
 		log.Fatalf("Cannot parse template: %v\n", err)
 	}

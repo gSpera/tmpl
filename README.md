@@ -29,7 +29,22 @@ Options
 | -data | -d | Data file | 
 | -output | -o | Output file | 
 | -help | -h | Show help | 
-| -html |   | Sanitaze HTML | 
+
+Sanitizing
+==========
+
+By default tmpl sanitizes HTML/JS/CSS and other types as defined in html/template (documentation)[https://golang.org/pkg/html/template],
+if you need to insert raw data inside the template you can use the following functions:
+
+|Type | Function |
+|-----|----------|
+|HTML | safeHTML|
+|JS | safeJS|
+|CSS | safeCSS|
+|URL | safeURL|
+|HTMLAttr | safeHTMLAttr|
+|JSStr | safeJSStr|
+|Srcset | safeSrcset|
 
 Contributing
 ============
