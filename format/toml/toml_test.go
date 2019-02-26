@@ -16,26 +16,26 @@ func TestUnmarshal(t *testing.T) {
 	}{
 		{
 			"empty",
-			[]byte("{}"),
+			[]byte(""),
 			outputMap{},
 			nil,
 		},
 		{
 			"string",
-			[]byte(`{"a": "b"}`),
+			[]byte(`a = "b"`),
 			outputMap{"a": "b"},
 			nil,
 		},
 		{
 			"multiple value",
-			[]byte(`{"a": 3, "b": "c"}`),
-			outputMap{"a": float64(3), "b": "c"},
+			[]byte("a = 3\nb = \"c\""),
+			outputMap{"a": int64(3), "b": "c"},
 			nil,
 		},
 		{
 			"array",
-			[]byte(`["a", "b", 3]`),
-			[]interface{}{"a", "b", float64(3)},
+			[]byte(`a = ["a", "b", "c"]`),
+			outputMap{"a": []interface{}{"a", "b", "c"}},
 			nil,
 		},
 	}

@@ -54,7 +54,9 @@ tmpl uses external packages for unmarshaling data, by default it uses
 |Format | Package | Registered as|
 |-------|---------|--------------|
 |json|encoding/json|json|
+|csv|encoding/csv|csv|
 |yaml|gopkg.in/yaml.v2|yaml, yml|
+|toml|github.com/BurntSushi/toml|toml|
 
 You can read the respective licences at the project pages.
 

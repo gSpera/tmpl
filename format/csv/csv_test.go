@@ -3,9 +3,9 @@ package json
 import (
 	"reflect"
 	"testing"
-)
 
-type outputMap = map[string]interface{}
+	"github.com/davecgh/go-spew/spew"
+)
 
 func TestUnmarshal(t *testing.T) {
 	tm := []struct {
@@ -16,26 +16,26 @@ func TestUnmarshal(t *testing.T) {
 	}{
 		{
 			"empty",
-			[]byte("{}"),
-			outputMap{},
+			[]byte(""),
+			[][]string(nil),
 			nil,
 		},
 		{
 			"string",
-			[]byte(`{"a": "b"}`),
-			outputMap{"a": "b"},
+			[]byte(`a,b`),
+			[][]string{[]string{"a", "b"}},
 			nil,
 		},
 		{
 			"multiple value",
-			[]byte(`{"a": 3, "b": "c"}`),
-			outputMap{"a": float64(3), "b": "c"},
+			[]byte("a,3\nb,c"),
+			[][]string{[]string{"a", "3"}, []string{"b", "c"}},
 			nil,
 		},
 		{
-			"array",
-			[]byte(`["a", "b", 3]`),
-			[]interface{}{"a", "b", float64(3)},
+			"header",
+			[]byte("name,age\na,3\nb,7"),
+			[][]string{[]string{"name", "age"}, []string{"a", "3"}, []string{"b", "7"}},
 			nil,
 		},
 	}
@@ -49,6 +49,8 @@ func TestUnmarshal(t *testing.T) {
 			}
 
 			if !reflect.DeepEqual(tt.out, out) {
+				spew.Dump(tt.out)
+				spew.Dump(out)
 				t.Errorf("wrong output; expected: %T{%v}; got: %T{%v}\n", tt.out, tt.out, out, out)
 			}
 		})
