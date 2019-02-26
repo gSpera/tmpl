@@ -1,7 +1,8 @@
 HTML Example
 ============
 
-This example shows how to insert HTML data inside the output, this is done with the `safeHTML` function
+This example shows how to insert HTML data inside the output,
+this is done with the `safeHTML` function
 
 Usage
 -----

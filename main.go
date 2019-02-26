@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/gSpera/tmpl/format"
-	_ "github.com/gSpera/tmpl/format/json"
 
 	"html/template"
 )

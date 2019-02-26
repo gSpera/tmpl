@@ -1,4 +1,9 @@
 Multiple formats for data
  - Compile Time
  - Run Time
-Library
+
+Plugin Template Function
+ - Run Time
+ - Compile Time
+
+Use as Library

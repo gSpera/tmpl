@@ -1,7 +1,7 @@
 TODO Example
 ============
 
-This examples manages a TODO file,
+This example manages a TODO file,
 it expects an array of printable values as the data type
 
 Usage
