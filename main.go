@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/gSpera/tmpl/format"
+	"github.com/gSpera/tmpl/function"
 
 	"html/template"
 )
@@ -81,6 +82,7 @@ func main() {
 
 	//Create Template
 	t := template.New("tmpl")
+	t.Funcs(function.FuncMap())
 	t.Funcs(safeTemplateFunctions)
 	tmplBody, err := ioutil.ReadFile(templateFile.String())
 	if err != nil {
