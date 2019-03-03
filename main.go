@@ -14,14 +14,18 @@ import (
 	"html/template"
 )
 
+const defaultTemplateFunctionFilename = "tmpl.so"
 const defaultOutputPermission = 0666
 
 func main() {
 	templateFile := new(FileFlag)
 	dataFile := new(FileFlag)
+	functionsFile := new(FileFlag)
+	*functionsFile = defaultTemplateFunctionFilename //Default value
 	var outputFile string
 	flag.Var(templateFile, "template", "Template file")
 	flag.Var(dataFile, "data", "Data file")
+	flag.Var(functionsFile, "functions", "Functions file")
 	flag.StringVar(&outputFile, "output", "", "Output file")
 	showFormats := flag.Bool("showFormats", false, "shows avaible formats and exits")
 	outputPermission := flag.Int("permission", defaultOutputPermission, "permission used to create output file")
@@ -78,6 +82,11 @@ func main() {
 	output, err := os.OpenFile(outputFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.FileMode(*outputPermission))
 	if err != nil {
 		log.Fatalf("Cannot open output file: %v\n", err)
+	}
+
+	//Try to register external functions
+	if functionsFile.IsValid() {
+		registerExternalFunction(functionsFile.String())
 	}
 
 	//Create Template
