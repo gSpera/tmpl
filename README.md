@@ -29,6 +29,7 @@ Options
 | -data | -d | Data file | 
 | -output | -o | Output file | 
 | -help | -h | Show help | 
+| -functions| -fn | Functions file |
 
 Sanitizing
 ==========
@@ -45,6 +46,23 @@ if you need to insert raw data inside the template you can use the following fun
 |HTMLAttr | safeHTMLAttr|
 |JSStr | safeJSStr|
 |Srcset | safeSrcset|
+
+Functions
+=========
+
+Over sanitizing functions tmpl provides some simple functions that you can use inside a template
+|Name|Params|Return|Usage|
+|----|------|------|-----|
+|currentTime||time.Time|Returns the current time.Time, like calling time.Time in Go|
+|parseTime|format(string), value(string)|time.Time|Parses the value string as time with the given format, like calling time.Parse in Go|
+|fromUnixTime|unix(int64)|time.Time|Returns the time.Time at the given unix timestamp, like calling time.Unix(unix, 0)|
+|fromUnixNanoTime|unix(int64), nano(int64)|time.Time|Returns the time.Time at the given unix timestamp, like calling time.Unix(unix, nano)|
+
+tmpl searches a `tmpl.so` library in the workdir and loads it, this is usefull for registering custom functions at runtime.
+Use the `-functions` flag to specify a custom file
+
+See also (Go plugin documentation)[https://golang.org/pkg/plugin]
+**This is not avaible on windows**
 
 Formatters
 ==========
