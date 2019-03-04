@@ -59,12 +59,6 @@ Over sanitizing functions tmpl provides some simple functions that you can use i
 |fromUnixTime |unix(int64) |time.Time|Returns the time.Time at the given unix timestamp, like calling time.Unix(unix, 0) |
 |fromUnixNanoTime |unix(int64), nano(int64) |time.Time |Returns the time.Time at the given unix timestamp, like calling time.Unix(unix, nano) |
 
-tmpl searches a `tmpl.so` library in the workdir and loads it, this is usefull for registering custom functions at runtime.
-Use the `-functions` flag to specify a custom file
-
-See also [Go plugin documentation](https://golang.org/pkg/plugin)
-**This is not avaible on windows**
-
 Formatters
 ==========
 
@@ -78,6 +72,20 @@ tmpl uses external packages for unmarshaling data, by default it uses
 |toml|github.com/BurntSushi/toml|toml|
 
 You can read the respective licences at the project pages.
+
+
+Custom Formats and Functions
+============================
+
+tmpl searches a `tmpl.so` library in the workdir and loads it, this is usefull for registering custom functions and formats at runtime.
+Use the `-externalFile` flag to specify a custom file
+
+For creating a `tmpl.so` file the suggested way is to create a `tmpl.go` file and set it up with a main funcion(which, currently, is not called) and an init function that will register custom functions and formats, building is done by the following command:
+```go build -o=tmpl.so -buildmode=plugin tmpl.go```
+
+See also [Go plugin documentation](https://golang.org/pkg/plugin)
+**This is not avaible on windows**
+
 
 Contributing
 ============
