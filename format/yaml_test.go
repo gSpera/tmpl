@@ -1,13 +1,12 @@
-package json
+package format
 
 import (
 	"reflect"
 	"testing"
 )
 
-type outputMap = map[string]interface{}
-
-func TestUnmarshal(t *testing.T) {
+func TestYAMLUnmarshal(t *testing.T) {
+	type outputMap = map[interface{}]interface{}
 	tm := []struct {
 		name  string
 		input []byte
@@ -16,8 +15,8 @@ func TestUnmarshal(t *testing.T) {
 	}{
 		{
 			"empty",
-			[]byte("{}"),
-			outputMap{},
+			[]byte(""),
+			nil,
 			nil,
 		},
 		{
@@ -29,18 +28,18 @@ func TestUnmarshal(t *testing.T) {
 		{
 			"multiple value",
 			[]byte(`{"a": 3, "b": "c"}`),
-			outputMap{"a": float64(3), "b": "c"},
+			outputMap{"a": 3, "b": "c"},
 			nil,
 		},
 		{
 			"array",
 			[]byte(`["a", "b", 3]`),
-			[]interface{}{"a", "b", float64(3)},
+			[]interface{}{"a", "b", 3},
 			nil,
 		},
 	}
 
-	u := unmarshaler{}
+	u := yamlUnmarshaler{}
 	for _, tt := range tm {
 		t.Run(tt.name, func(t *testing.T) {
 			out, err := u.Unmarshal(tt.input)

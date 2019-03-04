@@ -1,13 +1,12 @@
-package json
+package format
 
 import (
 	"reflect"
 	"testing"
 )
 
-type outputMap = map[interface{}]interface{}
-
-func TestUnmarshal(t *testing.T) {
+func TestTOMLUnmarshal(t *testing.T) {
+	type outputMap = map[string]interface{}
 	tm := []struct {
 		name  string
 		input []byte
@@ -17,30 +16,30 @@ func TestUnmarshal(t *testing.T) {
 		{
 			"empty",
 			[]byte(""),
-			nil,
+			outputMap{},
 			nil,
 		},
 		{
 			"string",
-			[]byte(`{"a": "b"}`),
+			[]byte(`a = "b"`),
 			outputMap{"a": "b"},
 			nil,
 		},
 		{
 			"multiple value",
-			[]byte(`{"a": 3, "b": "c"}`),
-			outputMap{"a": 3, "b": "c"},
+			[]byte("a = 3\nb = \"c\""),
+			outputMap{"a": int64(3), "b": "c"},
 			nil,
 		},
 		{
 			"array",
-			[]byte(`["a", "b", 3]`),
-			[]interface{}{"a", "b", 3},
+			[]byte(`a = ["a", "b", "c"]`),
+			outputMap{"a": []interface{}{"a", "b", "c"}},
 			nil,
 		},
 	}
 
-	u := unmarshaler{}
+	u := tomlUnmarshaler{}
 	for _, tt := range tm {
 		t.Run(tt.name, func(t *testing.T) {
 			out, err := u.Unmarshal(tt.input)

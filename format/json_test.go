@@ -1,13 +1,12 @@
-package json
+package format
 
 import (
 	"reflect"
 	"testing"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
-func TestUnmarshal(t *testing.T) {
+func TestJSONUnmarshal(t *testing.T) {
+	type outputMap = map[string]interface{}
 	tm := []struct {
 		name  string
 		input []byte
@@ -16,31 +15,31 @@ func TestUnmarshal(t *testing.T) {
 	}{
 		{
 			"empty",
-			[]byte(""),
-			[][]string(nil),
+			[]byte("{}"),
+			outputMap{},
 			nil,
 		},
 		{
 			"string",
-			[]byte(`a,b`),
-			[][]string{[]string{"a", "b"}},
+			[]byte(`{"a": "b"}`),
+			outputMap{"a": "b"},
 			nil,
 		},
 		{
 			"multiple value",
-			[]byte("a,3\nb,c"),
-			[][]string{[]string{"a", "3"}, []string{"b", "c"}},
+			[]byte(`{"a": 3, "b": "c"}`),
+			outputMap{"a": float64(3), "b": "c"},
 			nil,
 		},
 		{
-			"header",
-			[]byte("name,age\na,3\nb,7"),
-			[][]string{[]string{"name", "age"}, []string{"a", "3"}, []string{"b", "7"}},
+			"array",
+			[]byte(`["a", "b", 3]`),
+			[]interface{}{"a", "b", float64(3)},
 			nil,
 		},
 	}
 
-	u := unmarshaler{}
+	u := jsonUnmarshaler{}
 	for _, tt := range tm {
 		t.Run(tt.name, func(t *testing.T) {
 			out, err := u.Unmarshal(tt.input)
@@ -49,8 +48,6 @@ func TestUnmarshal(t *testing.T) {
 			}
 
 			if !reflect.DeepEqual(tt.out, out) {
-				spew.Dump(tt.out)
-				spew.Dump(out)
 				t.Errorf("wrong output; expected: %T{%v}; got: %T{%v}\n", tt.out, tt.out, out, out)
 			}
 		})
